@@ -1,0 +1,28 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Python
+venv/
+env/
+__pycache__/
+*.pyc
+
+# SSH Keys (private only)
+*_rsa
+*_rsa_work
+id-slurm-admin-v1
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# OpenStack credentials
+*clouds.yaml
+
+# OS files
+.DS_Store
+*.swp
+*~
