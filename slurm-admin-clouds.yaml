@@ -1,0 +1,12 @@
+# project: slurm
+# app cred: slurm-admin
+clouds:
+  openstack:
+    auth:
+      auth_url: https://keystone.openstack.hrcm.sussex.ac.uk
+      application_credential_id: "0ca9452ef7894dbd8aa61e7f6a76d13d"
+      application_credential_secret: "-vyvVB8T0j5iKAagDrJurJ1529iupAt_XhWfFpSII64sswVJsnGLt94ORcri6xAVHYo3yfOyD4m91dCBlg46mw"
+    region_name: "RegionOne"
+    interface: "public"
+    identity_api_version: 3
+    auth_type: "v3applicationcredential"

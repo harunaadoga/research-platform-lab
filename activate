@@ -1,0 +1,4 @@
+export OS_CLOUD=openstack
+export OS_CLIENT_CONFIG_FILE=slurm-admin-clouds.yaml
+. venv/bin/activate
+alias os=openstack
