@@ -45,7 +45,7 @@ resource "openstack_compute_instance_v2" "hpc-dev" {
 
   # VM configuration
   name        = "hpc-dev${count.index + 1}"
-  flavor_name = "general.v1.8cpu.16gb"
+  flavor_name = "general.v1.4cpu.8gb"
   key_pair    = "slurm-admin-v1"
 
   # First network interface: slurm-data (internal network)
