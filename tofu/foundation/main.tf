@@ -30,6 +30,7 @@ resource "proxmox_virtual_environment_vm" "node" {
 
   cpu {
     cores = 2
+    type  = "host"
   }
 
   memory {
@@ -37,14 +38,29 @@ resource "proxmox_virtual_environment_vm" "node" {
   }
 
   initialization {
+    datastore_id = "local-zfs"
+
     ip_config {
       ipv4 {
         address = "dhcp"
       }
     }
+
+    user_account {
+      username = "rocky"
+      keys     = [trimspace(file("~/.ssh/id_ed25519.pub"))]
+    }
   }
 
   agent {
     enabled = true
+    timeout = "3m"
+  }
+}
+
+output "vm_ipv4" {
+  value = {
+    for vm in proxmox_virtual_environment_vm.node :
+    vm.name => vm.ipv4_addresses
   }
 }
