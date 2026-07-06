@@ -1,36 +1,50 @@
-# Home Lab: Research Computing Platform as Code
+# Research Platform Engineering: A Reference Lab
 
-A miniature research computing platform built on Proxmox VE, managed
-entirely as code. Every component is reproducible from this repository:
-virtual machines are provisioned with OpenTofu, configured with Ansible,
-and validated by CI on every push.
+An open, reproducible blueprint for building a university-style research
+computing platform as code. HPC scheduling, monitoring, Kubernetes,
+network fabric and backup infrastructure, all provisioned with OpenTofu,
+configured with Ansible, and validated by CI on every push.
 
-The lab mirrors the architecture of a production university research
-platform: an HPC scheduler, monitoring stack, Kubernetes cluster,
-network fabric, and backup infrastructure, scaled down to a single node.
+The goal is educational: to document, in working code, the patterns used
+in production research computing (the platforms behind HPC clusters and
+research clouds at universities), at a scale anyone can reproduce on a
+single machine.
+
+## Who this is for
+
+- Engineers moving from systems administration into platform engineering
+- HPC and research computing staff adopting IaC, CI/CD and modern
+  monitoring
+- Anyone who wants to understand how research platforms fit together
+
+## Design principles
+
+1. Everything as code. No manual steps after the hypervisor install.
+2. Production patterns, miniature scale. Runs on one Proxmox node.
+3. Migration over greenfield. Includes legacy coexistence exercises
+   (e.g. Nagios to Prometheus) because real estates are brownfield.
 
 ## Architecture
 
-(diagram to follow: docs/architecture.md)
-
-- **Hypervisor:** Proxmox VE 9, ZFS storage
-- **Provisioning:** OpenTofu (bpg/proxmox provider), Rocky Linux 9
-  cloud-init template
-- **Configuration:** Ansible with dynamic inventory from the Proxmox API
-- **CI:** GitHub Actions lints all Tofu and Ansible on every push
+(docs/architecture.md, diagram in progress)
 
 ## Roadmap
 
 | Phase | Focus | Status |
 |-------|-------|--------|
-| 1 | IaC foundation: template, OpenTofu, dynamic inventory | in progress |
-| 2 | Slurm cluster + Prometheus/Grafana, Nagios migration study | planned |
-| 3 | Kubernetes (kubeadm) + GitOps | planned |
-| 4 | Firewall segmentation, backup/restore drills | planned |
-| 5 | Cumulus VX leaf-spine fabric (BGP unnumbered) | planned |
+| 1 | IaC foundation: cloud-init template, OpenTofu, dynamic inventory | in progress |
+| 2 | Slurm cluster, Prometheus/Grafana, Nagios migration study | planned |
+| 3 | Kubernetes (kubeadm) and GitOps | planned |
+| 4 | Firewall segmentation, backup and restore drills | planned |
+| 5 | Leaf-spine fabric with Cumulus VX and BGP unnumbered | planned |
 
-## Layout
+## Contributing
 
-    tofu/        OpenTofu modules per environment
-    ansible/     Roles, playbooks, dynamic inventory
-    docs/        Architecture notes and ADRs
+Issues, corrections and discussion are welcome, particularly from
+those running research computing platforms in production. If a pattern
+here differs from what works in your estate, open an issue: the
+comparison is the learning.
+
+## Licence
+
+MIT
