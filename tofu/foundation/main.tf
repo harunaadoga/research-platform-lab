@@ -37,6 +37,13 @@ resource "proxmox_virtual_environment_vm" "node" {
     dedicated = 2048
   }
 
+  disk {
+    interface 	 = "scsi0"
+    datastore_id = "local-zfs"
+    size	 = 30
+  }
+
+
   initialization {
     datastore_id = "local-zfs"
 
