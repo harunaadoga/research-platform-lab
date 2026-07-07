@@ -3,4 +3,5 @@ venv/
 *.tfstate
 *.tfstate.*
 *.tfvars
+*.history
 __pycache__/
