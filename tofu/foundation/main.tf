@@ -18,10 +18,41 @@ variable "pve_api_token" {
   sensitive = true
 }
 
+locals {
+  nodes = {
+    mon01 = {
+      cores  = 2
+      memory = 3072
+      disk   = 30
+      description = "Prometheus, Grafana, Alertmanager, Loki"
+    }
+    slurm-ctrl01 = {
+      cores  = 2
+      memory = 3072
+      disk   = 40
+      description = "Slurm controller, slurmdbd, MariaDB"
+    }
+    compute01 = {
+      cores  = 2
+      memory = 2048
+      disk   = 20
+      description = "Slurm compute node"
+    }
+    compute02 = {
+      cores  = 2
+      memory = 2048
+      disk   = 20
+      description = "Slurm compute node"
+    }
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "node" {
-  count     = 3
-  name      = "lab0${count.index + 1}"
+  for_each  = local.nodes
+  name      = each.key
   node_name = "gida"
+
+  description = each.value.description
 
   clone {
     vm_id = 9000
@@ -29,24 +60,26 @@ resource "proxmox_virtual_environment_vm" "node" {
   }
 
   cpu {
-    cores = 2
+    cores = each.value.cores
     type  = "host"
   }
 
   memory {
-    dedicated = 2048
+    dedicated = each.value.memory
   }
 
   disk {
-    interface 	 = "scsi0"
+    interface    = "scsi0"
     datastore_id = "local-zfs"
-    size	 = 30
+    size         = each.value.disk
   }
-
 
   initialization {
     datastore_id = "local-zfs"
 
+  dns {
+    domain = "gida.lab"
+    }
     ip_config {
       ipv4 {
         address = "dhcp"
@@ -65,9 +98,9 @@ resource "proxmox_virtual_environment_vm" "node" {
   }
 }
 
-output "vm_ipv4" {
+output "vm_ips" {
   value = {
-    for vm in proxmox_virtual_environment_vm.node :
-    vm.name => vm.ipv4_addresses
+    for name, vm in proxmox_virtual_environment_vm.node :
+    name => try(vm.ipv4_addresses[1][0], "pending")
   }
 }
