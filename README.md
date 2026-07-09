@@ -85,8 +85,8 @@ See [docs/architecture.md](docs/architecture.md) (diagram in progress).
 ## Reproducing
 
 ```bash
-git clone https://github.com/harunaadoga/devops-iac-infra.git
-cd devops-iac-infra/tofu/foundation
+git clone https://github.com/harunaadoga/research-platform-lab.git
+cd research-platform-lab/tofu/foundation
 export TF_VAR_pve_api_token='<your-proxmox-api-token>'
 tofu init && tofu apply
 ```
