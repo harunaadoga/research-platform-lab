@@ -1,0 +1,8 @@
+---
+plugin: community.general.proxmox
+url: https://192.168.0.50:8006
+user: root@pam
+token_id: tofu
+token_secret: "{{ lookup('env', 'PROXMOX_TOKEN_SECRET') }}"
+validate_certs: false
+want_proxmox_nodes_ansible_host: true
