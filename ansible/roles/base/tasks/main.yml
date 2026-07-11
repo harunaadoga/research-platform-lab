@@ -14,14 +14,26 @@
       - bind-utils
       - net-tools
 
-- name: Enable services (qemu, chronyd, node_exporter, firewalld)
+- name: Enable and start services qemu-guest-agent
   ansible.builtin.service:
-    name:
-      - qemu-guest-agent
-      - chronyd
-      - node_exporter
-      - firewalld 
+    name: qemu-guest-agent
     state: started
+    enabled: true
 
-  
-  
+- name: Enable and start chronyd
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: true
+
+- name: Enable and start node_exporter
+  ansible.builtin.service:
+    name: node_exporter
+    state: started
+    enabled: true
+
+- name: Enabel and start firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true

@@ -1,0 +1,6 @@
+---
+- name: Main site play
+  become: true
+  hosts: proxmox_all_qemu:!ubuntu-desktop
+  roles:
+    - base
