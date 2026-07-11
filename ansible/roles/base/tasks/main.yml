@@ -1,10 +1,15 @@
 ---
+
+- name: Enable EPEL repository
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present 
+
 - name: Install base packages
   ansible.builtin.dnf:
     name: 
       - qemu-guest-agent
       - chrony
-      - golang-github-prometheus-node-exporter
       - vim
       - htop
       - iperf3
@@ -13,6 +18,7 @@
       - bash-completion
       - bind-utils
       - net-tools
+      - firewalld
 
 - name: Enable and start services qemu-guest-agent
   ansible.builtin.service:
@@ -26,13 +32,7 @@
     state: started
     enabled: true
 
-- name: Enable and start node_exporter
-  ansible.builtin.service:
-    name: node_exporter
-    state: started
-    enabled: true
-
-- name: Enabel and start firewalld
+- name: Enable and start firewalld
   ansible.builtin.service:
     name: firewalld
     state: started
